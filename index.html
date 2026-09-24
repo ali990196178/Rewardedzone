@@ -1,0 +1,319 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Free Blox - اربح حتى 250 روبوكس مجاناً</title>
+    <style>
+        :root {
+            --primary: #6366f1;
+            --primary-hover: #4f46e5;
+            --bg: #0f172a;
+            --card-bg: #1e293b;
+            --text: #f8fafc;
+            --text-muted: #94a3b8;
+            --accent: #22c55e;
+            --gold: #facc15;
+        }
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+        body {
+            background-color: var(--bg);
+            color: var(--text);
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            padding: 20px;
+        }
+        header {
+            text-align: center;
+            margin-bottom: 25px;
+        }
+        header h1 {
+            font-size: 2.3rem;
+            color: var(--primary);
+            margin-bottom: 5px;
+        }
+        header p {
+            color: var(--text-muted);
+        }
+        .container {
+            background-color: var(--card-bg);
+            width: 100%;
+            max-width: 550px;
+            padding: 25px;
+            border-radius: 16px;
+            box-shadow: 0 10px 25px rgba(0,0,0,0.3);
+            text-align: center;
+        }
+        .tiers-selector {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 10px;
+            margin-bottom: 20px;
+        }
+        .tier-card {
+            background: rgba(255,255,255,0.05);
+            border: 2px solid #475569;
+            padding: 12px;
+            border-radius: 10px;
+            cursor: pointer;
+            transition: 0.3s;
+        }
+        .tier-card.active {
+            border-color: var(--gold);
+            background: rgba(250, 204, 21, 0.1);
+        }
+        .tier-card h4 {
+            color: var(--gold);
+            font-size: 1.1rem;
+        }
+        .tier-card span {
+            font-size: 0.8rem;
+            color: var(--text-muted);
+        }
+        .stats {
+            background: rgba(255,255,255,0.03);
+            padding: 15px;
+            border-radius: 10px;
+            margin-bottom: 20px;
+        }
+        .stats h3 {
+            font-size: 1.4rem;
+            color: var(--accent);
+            margin-bottom: 5px;
+        }
+        .btn {
+            background-color: var(--primary);
+            color: white;
+            border: none;
+            padding: 12px 20px;
+            font-size: 1rem;
+            font-weight: bold;
+            border-radius: 8px;
+            cursor: pointer;
+            width: 100%;
+            transition: 0.3s;
+            margin-top: 10px;
+        }
+        .btn:hover {
+            background-color: var(--primary-hover);
+        }
+        .btn-auto {
+            background-color: #8b5cf6;
+        }
+        .btn-auto:hover {
+            background-color: #7c3aed;
+        }
+        .btn:disabled {
+            background-color: #475569;
+            cursor: not-allowed;
+        }
+        .progress-bar {
+            width: 100%;
+            background-color: #334155;
+            border-radius: 8px;
+            margin: 20px 0;
+            overflow: hidden;
+            height: 20px;
+        }
+        .progress-fill {
+            height: 100%;
+            background-color: var(--accent);
+            width: 0%;
+            transition: width 0.3s ease;
+        }
+        input {
+            width: 100%;
+            padding: 12px;
+            margin: 10px 0;
+            border-radius: 8px;
+            border: 1px solid #475569;
+            background-color: #0f172a;
+            color: white;
+            font-size: 1rem;
+        }
+        .status-msg {
+            margin: 15px 0;
+            color: var(--gold);
+            font-weight: bold;
+        }
+    </style>
+</head>
+<body>
+
+    <header>
+        <h1>Free Blox 🎮</h1>
+        <p>جمع إعلاناتك، اختر جائزتك، واربح حتى 250 روبوكس!</p>
+    </header>
+
+    <div class="container">
+        <!-- اختيار مستوى الجائزة -->
+        <p style="margin-bottom: 10px; color: var(--text-muted);">اختر مستوى الجائزة التي تريد سحبها:</p>
+        <div class="tiers-selector">
+            <div class="tier-card active" onclick="selectTier(0)">
+                <h4>5 Robux</h4>
+                <span>60 إعلان</span>
+            </div>
+            <div class="tier-card" onclick="selectTier(1)">
+                <h4>50 Robux</h4>
+                <span>300 إعلان</span>
+            </div>
+            <div class="tier-card" onclick="selectTier(2)">
+                <h4>250 Robux</h4>
+                <span>1200 إعلان</span>
+            </div>
+        </div>
+
+        <div class="stats">
+            <h3 id="adCount">الإعلانات المجمعة: 0</h3>
+            <span id="tierDesc">الهدف الحالي: 60 إعلان (لجائزة 5 روبوكس)</span>
+        </div>
+
+        <div class="progress-bar">
+            <div class="progress-fill" id="progressFill"></div>
+        </div>
+
+        <div class="status-msg" id="statusMsg">جاهز لبدء التجميع</div>
+
+        <div id="actionsContainer">
+            <button class="btn" id="watchBtn" onclick="startSingleAd()">مشاهدة إعلان يدوي</button>
+            <button class="btn btn-auto" id="autoBtn" onclick="toggleAutoWatch()">تشغيل المشاهدة التلقائية (Auto Watch)</button>
+        </div>
+
+        <div id="withdrawSection" style="display: none; margin-top: 25px;">
+            <hr style="border: 0; border-top: 1px solid #475569; margin: 15px 0;">
+            <h3 style="color: var(--accent);" id="withdrawTitle">مبروك! أتممت المطلوب 🎉</h3>
+            <input type="text" id="gamepassLink" placeholder="أدخل رابط القيم باس (Game Pass)">
+            <button class="btn" style="background-color: var(--accent);" onclick="withdraw()">سحب الروبوكس آلياً</button>
+        </div>
+    </div>
+
+    <script>
+        const tiers = [
+            { robux: 5, target: 60 },
+            { robux: 50, target: 300 },
+            { robux: 250, target: 1200 }
+        ];
+
+        let currentTierIndex = 0;
+        let totalAdsWatched = 0; // إجمالي الإعلانات المجمعة المشتركة
+        let isAutoRunning = false;
+        let autoInterval = null;
+
+        function selectTier(index) {
+            if (isAutoRunning) return;
+            currentTierIndex = index;
+            
+            // تحديث التصميم البصري للمستويات فقط دون تصفير العداد العام
+            document.querySelectorAll('.tier-card').forEach((card, idx) => {
+                if(idx === index) card.classList.add('active');
+                else card.classList.remove('active');
+            });
+
+            updateUI();
+        }
+
+        function updateUI() {
+            const currentTier = tiers[currentTierIndex];
+            
+            document.getElementById('adCount').innerText = `الإعلانات المجمعة: ${totalAdsWatched} / ${currentTier.target}`;
+            document.getElementById('tierDesc').innerText = `الهدف الحالي: ${currentTier.target} إعلان (لجائزة ${currentTier.robux} روبوكس)`;
+            
+            let percentage = (totalAdsWatched / currentTier.target) * 100;
+            if(percentage > 100) percentage = 100;
+            document.getElementById('progressFill').style.width = percentage + '%';
+
+            // التحقق هل وصل للهدف الخاص بالفئة المختارة أم لا
+            if(totalAdsWatched >= currentTier.target) {
+                stopAutoWatch();
+                document.getElementById('actionsContainer').style.display = 'none';
+                document.getElementById('withdrawSection').style.display = 'block';
+                document.getElementById('withdrawTitle').innerText = `مبروك! أتممت ${currentTier.target} إعلان لجائزة ${currentTier.robux} روبوكس 🎉`;
+                document.getElementById('statusMsg').innerText = "تم الوصول للهدف بنجاح!";
+            } else {
+                document.getElementById('actionsContainer').style.display = 'block';
+                document.getElementById('withdrawSection').style.display = 'none';
+                document.getElementById('statusMsg').innerText = "جاهز لبدء التجميع";
+            }
+        }
+
+        function startSingleAd() {
+            totalAdsWatched++;
+            document.getElementById('statusMsg').innerText = "جاري مشاهدة إعلان واحتساب النقطة...";
+            setTimeout(() => {
+                updateUI();
+            }, 300);
+        }
+
+        function toggleAutoWatch() {
+            const autoBtn = document.getElementById('autoBtn');
+            const watchBtn = document.getElementById('watchBtn');
+            const currentTier = tiers[currentTierIndex];
+
+            if (!isAutoRunning) {
+                if(totalAdsWatched >= currentTier.target) return;
+
+                isAutoRunning = true;
+                autoBtn.innerText = "إيقاف المشاهدة التلقائية";
+                autoBtn.style.backgroundColor = "#ef4444";
+                watchBtn.disabled = true;
+                document.getElementById('statusMsg').innerText = "⚡ نظام المشاهدة التلقائية يعمل في الخلفية...";
+
+                autoInterval = setInterval(() => {
+                    if (totalAdsWatched < currentTier.target) {
+                        totalAdsWatched += 5; // يزيد 5 إعلانات في كل دقة سريعة
+                        if(totalAdsWatched > currentTier.target) totalAdsWatched = currentTier.target;
+                        updateUI();
+                    } else {
+                        stopAutoWatch();
+                    }
+                }, 300); 
+            } else {
+                stopAutoWatch();
+            }
+        }
+
+        function stopAutoWatch() {
+            if (!isAutoRunning) return;
+            isAutoRunning = false;
+            clearInterval(autoInterval);
+            
+            const autoBtn = document.getElementById('autoBtn');
+            const watchBtn = document.getElementById('watchBtn');
+            
+            if(autoBtn) {
+                autoBtn.innerText = "تشغيل المشاهدة التلقائية (Auto Watch)";
+                autoBtn.style.backgroundColor = "#8b5cf6";
+            }
+            if(watchBtn) {
+                watchBtn.disabled = false;
+            }
+            
+            const currentTier = tiers[currentTierIndex];
+            if(totalAdsWatched < currentTier.target) {
+                document.getElementById('statusMsg').innerText = "تم إيقاف المشاهدة التلقائية مؤقتاً";
+            }
+        }
+
+        function withdraw() {
+            let link = document.getElementById('gamepassLink').value;
+            if(!link) {
+                alert('الرجاء إدخال رابط القيم باس أولاً!');
+                return;
+            }
+            const currentTier = tiers[currentTierIndex];
+            alert(`تم استلام طلب سحب ${currentTier.robux} روبوكس بنجاح! سيتم المراجعة والإرسال.`);
+            
+            // تصفير العداد فقط بعد نجاح السحب
+            totalAdsWatched = 0;
+            location.reload();
+        }
+    </script>
+</body>
+</html>

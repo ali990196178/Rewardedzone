@@ -3,13 +3,14 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>PrizeHub - منصة المكافآت والجوائز الرقمية</title>
+    <title>Rewardedzone - منصة المكافآت والجوائز الرقمية</title>
     <style>
         :root {
             --bg-color: #0f172a;
             --card-bg: #1e293b;
             --primary-color: #3b82f6;
             --accent-color: #10b981;
+            --gold-color: #f59e0b;
             --text-color: #f8fafc;
             --text-muted: #94a3b8;
         }
@@ -56,6 +57,8 @@
             font-size: 0.95rem;
             border-bottom: 1px solid #334155;
             color: var(--text-muted);
+            flex-wrap: wrap;
+            gap: 10px;
         }
 
         .stats-bar span {
@@ -103,7 +106,7 @@
         }
 
         .progress-box span {
-            color: var(--primary-color);
+            color: var(--gold-color);
             font-weight: bold;
         }
 
@@ -118,11 +121,35 @@
             transition: 0.3s;
             font-weight: bold;
             width: 100%;
+            margin-bottom: 10px;
         }
 
         .btn:hover {
             opacity: 0.9;
             transform: translateY(-2px);
+        }
+
+        .rewards-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
+            gap: 10px;
+            margin-bottom: 1.5rem;
+        }
+
+        .reward-item {
+            background: #0f172a;
+            border: 1px solid #334155;
+            padding: 10px;
+            border-radius: 8px;
+            text-align: center;
+            font-size: 0.9rem;
+        }
+
+        .reward-item strong {
+            color: var(--gold-color);
+            display: block;
+            font-size: 1.1rem;
+            margin-top: 5px;
         }
 
         .info-section {
@@ -174,41 +201,47 @@
 <body>
 
     <header>
-        <div class="logo">Prize<span>Hub</span></div>
+        <div class="logo">Rewarded<span>zone</span></div>
     </header>
 
     <div class="stats-bar">
-        <div>الإعلانات المنجزة: <span id="adsCount">0</span> / 60</div>
+        <div>إجمالي المهام المنجزة: <span id="adsCount">0</span> إعلان</div>
         <div>رصيد النقاط: <span id="pointsCount">0</span> نقطة</div>
     </div>
 
     <main>
         <div class="card">
-            <h2>إنجاز المهام وعروض المكافآت</h2>
-            <p>أكمل المهام والإعلانات المتاحة يدوياً لجمع النقاط واستبدالها بالجوائز الرقمية المتاحة في المنصة.</p>
+            <h2>مركز إنجاز المهام والعروض</h2>
+            <p>أكمل المهام والإعلانات المتاحة لجمع النقاط وفتح مستويات الجوائز الكبرى من 5 وحتى 250 نقطة!</p>
 
-            <div class="progress-box">
-                مستوى التقدم: <span id="progressText">0 / 60 إعلان</span>
+            <div class="rewards-grid">
+                <div class="reward-item">المستوى الأول <strong>5 روبوكس</strong></div>
+                <div class="reward-item">المستوى الثاني <strong>50 روبوكس</strong></div>
+                <div class="reward-item">المستوى الثالث <strong>100 روبوكس</strong></div>
+                <div class="reward-item">الجائزة الكبرى <strong>250 روبوكس</strong></div>
             </div>
 
-            <button class="btn" onclick="watchManual()">إنجاز مشاهدة إعلان 📺</button>
+            <div class="progress-box">
+                التقدم الحالي نحو الجائزة القادمة: <span id="progressText">0 إعلان</span>
+            </div>
+
+            <button class="btn" onclick="watchManual()">إنجاز مشاهدة إعلان واستلام نقاط 📺</button>
         </div>
 
         <div class="info-section">
-            <h3>شروط وآلية الاستخدام</h3>
-            <p>• يتم احتساب المهام والإعلانات المشاهدة يدوياً فقط لضمان دقة النظام.</p>
-            <p>• عند وصول العداد إلى 60 إعلاناً، يتم إضافة 5 نقاط مباشرة إلى رصيد حسابك.</p>
-            <p>• يمكن للمستخدمين طلب سحب الأرباح أو الجوائز عند استيفاء الحد الأدنى للرصيد.</p>
+            <h3>كيف تزيد من أرباحك؟</h3>
+            <p>• كلما زاد عدد الإعلانات والمهام التي يشاهدها المستخدمون، زادت أرباحك الإعلانية بشكل مباشر.</p>
+            <p>• النظام مصمم لتحفيز المستخدم على إتمام مهام أكثر للوصول إلى جوائز الـ 250 روبوكس الكبرى.</p>
         </div>
     </main>
 
     <footer>
         <div class="links">
-            <a href="#" onclick="alert('هذه الصفحة توضح التزامنا بحماية بيانات المستخدمين وسياسات الخصوصية المعمول بها.')">سياسة الخصوصية</a> | 
-            <a href="#" onclick="alert('شروط الاستخدام تضمن حقوق المنصة والمستخدمين في إتمام المهام العادلة.')">شروط الاستخدام</a> | 
-            <a href="#" onclick="alert('للدعم الفني والاستفسارات، يمكنك التواصل عبر البريد الإلكتروني الرسمي للمنصة.')">اتصل بنا</a>
+            <a href="#" onclick="alert('سياسة الخصوصية تحمي حقوق المنصة والمستخدمين.')">سياسة الخصوصية</a> | 
+            <a href="#" onclick="alert('شروط الاستخدام تضمن عدالة توزيع المهام والجوائز.')">شروط الاستخدام</a> | 
+            <a href="#" onclick="alert('للدعم الفني، يرجى مراسلتنا عبر البريد المخصص.')">اتصل بنا</a>
         </div>
-        <p>&copy; 2026 PrizeHub. جميع الحقوق محفوظة.</p>
+        <p>&copy; 2026 Rewardedzone. جميع الحقوق محفوظة.</p>
     </footer>
 
     <script>
@@ -220,19 +253,14 @@
         function updateDisplay() {
             document.getElementById('adsCount').innerText = adsWatched;
             document.getElementById('pointsCount').innerText = pointsEarned;
-            document.getElementById('progressText').innerText = adsWatched + " / 60 إعلان";
+            document.getElementById('progressText').innerText = adsWatched + " إعلان منجز";
         }
 
         function watchManual() {
             adsWatched++;
-            
-            if (adsWatched >= 60) {
-                alert('🎉 ممتاز! أتممت 60 إعلاناً وتم إضافة 5 نقاط إلى رصيدك بنجاح.');
-                pointsEarned += 5;
-                adsWatched = 0; 
-            } else {
-                alert('تم تسجيل المهمة بنجاح! متبقي ' + (60 - adsWatched) + ' إعلان للوصول للدفعة التالية.');
-            }
+            pointsEarned += 2; // يربح نقاط مع كل إعلان
+
+            alert('✅ تم إنجاز الإعلان بنجاح وتم إضافة نقاط إلى رصيدك! استمر للوصول إلى مستويات الجوائز الكبرى (50 و 100 و 250 روبوكس).');
 
             localStorage.setItem('adsWatched', adsWatched);
             localStorage.setItem('pointsEarned', pointsEarned);

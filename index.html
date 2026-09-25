@@ -3,15 +3,15 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>FreeBlox - منصة المكافآت والعروض</title>
+    <title>PrizeHub - منصة المكافآت والجوائز الرقمية</title>
     <style>
         :root {
-            --primary-color: #00b4d8;
-            --secondary-color: #03045e;
-            --accent-color: #90e0ef;
             --bg-color: #0f172a;
             --card-bg: #1e293b;
+            --primary-color: #3b82f6;
+            --accent-color: #10b981;
             --text-color: #f8fafc;
+            --text-muted: #94a3b8;
         }
 
         * {
@@ -31,25 +31,41 @@
 
         header {
             background: var(--card-bg);
-            padding: 1.5rem;
-            text-align: center;
+            padding: 1.2rem 2rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
             border-bottom: 2px solid var(--primary-color);
         }
 
-        header h1 {
-            color: var(--primary-color);
-            font-size: 2rem;
-            margin-bottom: 0.5rem;
+        header .logo {
+            font-size: 1.8rem;
+            font-weight: bold;
+            color: var(--text-color);
         }
 
-        header p {
-            color: #94a3b8;
+        header .logo span {
+            color: var(--primary-color);
+        }
+
+        .stats-bar {
+            background: #111827;
+            padding: 0.8rem 2rem;
+            display: flex;
+            justify-content: space-around;
             font-size: 0.95rem;
+            border-bottom: 1px solid #334155;
+            color: var(--text-muted);
+        }
+
+        .stats-bar span {
+            color: var(--accent-color);
+            font-weight: bold;
         }
 
         main {
             flex: 1;
-            max-width: 800px;
+            max-width: 750px;
             margin: 2rem auto;
             padding: 0 1rem;
             width: 100%;
@@ -58,33 +74,50 @@
         .card {
             background: var(--card-bg);
             border-radius: 12px;
-            padding: 2rem;
+            padding: 2.5rem 2rem;
             box-shadow: 0 10px 25px rgba(0,0,0,0.3);
             text-align: center;
-            margin-bottom: 2rem;
+            border: 1px solid #334155;
+            margin-bottom: 1.5rem;
         }
 
         .card h2 {
             margin-bottom: 1rem;
-            color: var(--accent-color);
+            color: var(--text-color);
+            font-size: 1.8rem;
         }
 
         .card p {
-            color: #cbd5e1;
+            color: var(--text-muted);
             margin-bottom: 1.5rem;
             line-height: 1.6;
         }
 
+        .progress-box {
+            background: #0f172a;
+            padding: 1.2rem;
+            border-radius: 8px;
+            margin-bottom: 1.8rem;
+            font-size: 1.1rem;
+            border: 1px solid #334155;
+        }
+
+        .progress-box span {
+            color: var(--primary-color);
+            font-weight: bold;
+        }
+
         .btn {
-            background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+            background: var(--primary-color);
             color: white;
             border: none;
-            padding: 0.8rem 2rem;
-            font-size: 1rem;
+            padding: 1rem 2rem;
+            font-size: 1.1rem;
             border-radius: 8px;
             cursor: pointer;
             transition: 0.3s;
             font-weight: bold;
+            width: 100%;
         }
 
         .btn:hover {
@@ -92,15 +125,26 @@
             transform: translateY(-2px);
         }
 
-        .disclaimer {
-            background: #27272a;
-            border-right: 4px solid #f59e0b;
-            padding: 1rem;
-            border-radius: 6px;
-            margin-top: 1.5rem;
-            font-size: 0.85rem;
+        .info-section {
+            background: var(--card-bg);
+            border-radius: 12px;
+            padding: 1.5rem;
+            margin-bottom: 2rem;
+            border: 1px solid #334155;
             text-align: right;
-            color: #d4d4d8;
+        }
+
+        .info-section h3 {
+            color: var(--primary-color);
+            margin-bottom: 0.8rem;
+            font-size: 1.2rem;
+        }
+
+        .info-section p {
+            color: var(--text-muted);
+            font-size: 0.9rem;
+            line-height: 1.5;
+            margin-bottom: 0.5rem;
         }
 
         footer {
@@ -108,8 +152,8 @@
             text-align: center;
             padding: 1.5rem;
             border-top: 1px solid #334155;
-            font-size: 0.9rem;
-            color: #94a3b8;
+            font-size: 0.85rem;
+            color: var(--text-muted);
         }
 
         footer .links {
@@ -130,31 +174,72 @@
 <body>
 
     <header>
-        <h1>FreeBlox Platform</h1>
-        <p>منصة رقمية مخصصة للمسابقات والعروض الترويجية الآمنة</p>
+        <div class="logo">Prize<span>Hub</span></div>
     </header>
+
+    <div class="stats-bar">
+        <div>الإعلانات المنجزة: <span id="adsCount">0</span> / 60</div>
+        <div>رصيد النقاط: <span id="pointsCount">0</span> نقطة</div>
+    </div>
 
     <main>
         <div class="card">
-            <h2>مرحباً بك في بوابتنا التفاعلية</h2>
-            <p>نحن نقدم تجربة آمنة ومتكاملة للمستخدمين للمشاركة في العروض الترويجية المعتمدة وإنجاز المهام الرقمية بكل سهولة وشفافية.</p>
-            
-            <button class="btn" onclick="alert('يرجى إكمال العروض المتاحة من خلال القائمة الرئيسية المعتمدة.')">استعراض المهام المتاحة</button>
+            <h2>إنجاز المهام وعروض المكافآت</h2>
+            <p>أكمل المهام والإعلانات المتاحة يدوياً لجمع النقاط واستبدالها بالجوائز الرقمية المتاحة في المنصة.</p>
 
-            <div class="disclaimer">
-                <strong>تنبيه قانوني:</strong> هذا الموقع هو منصة مستقلة للعروض والمسابقات ولا ينتمي أو يرتبط بأي شكل من الأشكال بـ Roblox Corporation أو أي علامة تجارية أخرى مذكورة لأغراض توضيحية. جميع الحقوق محفوظة لأصحابها.
+            <div class="progress-box">
+                مستوى التقدم: <span id="progressText">0 / 60 إعلان</span>
             </div>
+
+            <button class="btn" onclick="watchManual()">إنجاز مشاهدة إعلان 📺</button>
+        </div>
+
+        <div class="info-section">
+            <h3>شروط وآلية الاستخدام</h3>
+            <p>• يتم احتساب المهام والإعلانات المشاهدة يدوياً فقط لضمان دقة النظام.</p>
+            <p>• عند وصول العداد إلى 60 إعلاناً، يتم إضافة 5 نقاط مباشرة إلى رصيد حسابك.</p>
+            <p>• يمكن للمستخدمين طلب سحب الأرباح أو الجوائز عند استيفاء الحد الأدنى للرصيد.</p>
         </div>
     </main>
 
     <footer>
         <div class="links">
-            <a href="#">سياسة الخصوصية</a> | 
-            <a href="#">شروط الاستخدام</a> | 
-            <a href="#">اتصل بنا</a>
+            <a href="#" onclick="alert('هذه الصفحة توضح التزامنا بحماية بيانات المستخدمين وسياسات الخصوصية المعمول بها.')">سياسة الخصوصية</a> | 
+            <a href="#" onclick="alert('شروط الاستخدام تضمن حقوق المنصة والمستخدمين في إتمام المهام العادلة.')">شروط الاستخدام</a> | 
+            <a href="#" onclick="alert('للدعم الفني والاستفسارات، يمكنك التواصل عبر البريد الإلكتروني الرسمي للمنصة.')">اتصل بنا</a>
         </div>
-        <p>&copy; 2026 FreeBlox. جميع الحقوق محفوظة.</p>
+        <p>&copy; 2026 PrizeHub. جميع الحقوق محفوظة.</p>
     </footer>
+
+    <script>
+        let adsWatched = localStorage.getItem('adsWatched') ? parseInt(localStorage.getItem('adsWatched')) : 0;
+        let pointsEarned = localStorage.getItem('pointsEarned') ? parseInt(localStorage.getItem('pointsEarned')) : 0;
+
+        updateDisplay();
+
+        function updateDisplay() {
+            document.getElementById('adsCount').innerText = adsWatched;
+            document.getElementById('pointsCount').innerText = pointsEarned;
+            document.getElementById('progressText').innerText = adsWatched + " / 60 إعلان";
+        }
+
+        function watchManual() {
+            adsWatched++;
+            
+            if (adsWatched >= 60) {
+                alert('🎉 ممتاز! أتممت 60 إعلاناً وتم إضافة 5 نقاط إلى رصيدك بنجاح.');
+                pointsEarned += 5;
+                adsWatched = 0; 
+            } else {
+                alert('تم تسجيل المهمة بنجاح! متبقي ' + (60 - adsWatched) + ' إعلان للوصول للدفعة التالية.');
+            }
+
+            localStorage.setItem('adsWatched', adsWatched);
+            localStorage.setItem('pointsEarned', pointsEarned);
+
+            updateDisplay();
+        }
+    </script>
 
 </body>
 </html>

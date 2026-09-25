@@ -258,9 +258,7 @@
 
         function watchManual() {
             adsWatched++;
-            pointsEarned += 2; // يربح نقاط مع كل إعلان
-
-            alert('✅ تم إنجاز الإعلان بنجاح وتم إضافة بوبوكس إلى رصيدك! استمر للوصول إلى مستويات الجوائز الكبرى (50 و 100 و 250 بوبوكس).');
+            pointsEarned += 2; // زيادة النقاط بصمت
 
             localStorage.setItem('adsWatched', adsWatched);
             localStorage.setItem('pointsEarned', pointsEarned);

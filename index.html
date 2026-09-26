@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     
-    <!-- كود إثبات ملكية الموقع لشبكة Monetag -->
+    <!-- كود توثيق Monetag -->
     <meta name="monetag" content="ac09422eeadd2fd37679af593155482e">
 
     <title>Rewardedzone - منصة المكافآت والجوائز الرقمية</title>
@@ -234,7 +234,6 @@
             font-weight: bold;
         }
 
-        /* تصميم قسم ليدربورد الأبطال الداعمين */
         .leaderboard-section {
             background: var(--card-bg);
             border-radius: 12px;
@@ -276,7 +275,11 @@
         .rank-1 { color: var(--gold-color); font-weight: bold; }
         .rank-2 { color: var(--silver-color); font-weight: bold; }
         .rank-3 { color: var(--bronze-color); font-weight: bold; }
-        .current-user-row { background-color: rgba(59, 130, 246, 0.15); font-weight: bold; border: 1px solid var(--primary-color); }
+        .no-data {
+            color: var(--text-muted);
+            font-style: italic;
+            padding: 20px !important;
+        }
 
         .info-section {
             background: var(--card-bg);
@@ -336,7 +339,6 @@
     </div>
 
     <main>
-        <!-- قسم الجوائز الرئيسي -->
         <div class="card">
             <h2>مركز إنجاز المهام وعروض المكافآت</h2>
             <p>اضغط على الهدف الذي تريد الوصول إليه لتثبيته، ثم أكمل مشاهدة الإعلانات لملء الشريط واستلام الجائزة!</p>
@@ -348,7 +350,6 @@
                 <div class="reward-item" id="target-250" onclick="selectTarget(250, 3000)">الجائزة الكبرى <strong>250 بوبوكس</strong></div>
             </div>
 
-            <!-- شريط التقدم المطور -->
             <div class="progress-box">
                 <div class="progress-title">
                     <span>الهدف المحدد: <strong id="targetDisplay">5 بوبوكس</strong></span>
@@ -365,7 +366,6 @@
             <button id="actionBtn" class="btn" onclick="handleAction()">إنجاز مشاهدة إعلان واستلام بوبوكس 📺</button>
         </div>
 
-        <!-- قسم دعم المنصة التطوعي -->
         <div class="support-section">
             <h3>هل تحب موقعنا؟ ادعمنا بدون مقابل! 💖</h3>
             <p>إذا كنت تحب المنصة وتريد مساعدتنا في الاستمرار وتوفير المزيد من جوائز البوبوكس، يمكنك مشاهدة إعلانات دعم مجانية وبدون مقابل!</p>
@@ -373,10 +373,9 @@
             <div class="support-stats">إجمالي مساهماتك في دعم المنصة: <span id="supportCount">0</span> إعلان</div>
         </div>
 
-        <!-- قسم قائمة أفضل 30 داعم (Leaderboard) -->
         <div class="leaderboard-section">
             <h3>🏆 قائمة أفضل 30 داعماً للمنصة (Leaderboard)</h3>
-            <p>شرف الداعمين الأبطال الذين يساهمون بمشاهدة إعلانات الدعم لإبقاء الموقع مجانياً للجميع!</p>
+            <p>قائمة الداعمين الحقيقيين الذين ساهموا بمشاهدة إعلانات الدعم:</p>
             
             <table class="leaderboard-table">
                 <thead>
@@ -387,7 +386,6 @@
                     </tr>
                 </thead>
                 <tbody id="leaderboardBody">
-                    <!-- يتم توليد القائمة هنا تلقائياً عبر JS -->
                 </tbody>
             </table>
         </div>
@@ -414,39 +412,9 @@
         let supportAds = localStorage.getItem('supportAds') ? parseInt(localStorage.getItem('supportAds')) : 0;
         let targetRobux = localStorage.getItem('targetRobux') ? parseInt(localStorage.getItem('targetRobux')) : 5;
         let requiredAds = localStorage.getItem('requiredAds') ? parseInt(localStorage.getItem('requiredAds')) : 60;
+        let username = localStorage.getItem('supporterUsername') ? localStorage.getItem('supporterUsername') : "";
 
-        // قائمة داعمين افتراضية واقعية
-        const baseLeaderboard = [
-            { name: "ProGamer_99 👑", count: 480 },
-            { name: "Legend_Roblox 🥇", count: 412 },
-            { name: "Shadow_Hunter 🥈", count: 350 },
-            { name: "King_Of_Games", count: 290 },
-            { name: "Hero_X", count: 265 },
-            { name: "Master_Builder", count: 240 },
-            { name: "Dark_Knight", count: 210 },
-            { name: "GamerGirl_Sa", count: 195 },
-            { name: "Speed_Runner", count: 180 },
-            { name: "Pixel_Master", count: 165 },
-            { name: "Vortex_Player", count: 150 },
-            { name: "Alpha_Wolf", count: 135 },
-            { name: "Super_Sam", count: 120 },
-            { name: "Blox_Pro", count: 110 },
-            { name: "Neon_Rider", count: 98 },
-            { name: "Dragon_Slayer", count: 85 },
-            { name: "Storm_Breaker", count: 76 },
-            { name: "Star_Gamer", count: 68 },
-            { name: "Cyber_Ninja", count: 59 },
-            { name: "Epic_Winner", count: 52 },
-            { name: "Fire_Bolt", count: 45 },
-            { name: "Ice_Wizard", count: 38 },
-            { name: "Thunder_Boy", count: 31 },
-            { name: "Sky_Walker", count: 25 },
-            { name: "Ghost_Rider", count: 20 },
-            { name: "Mystery_Player", count: 16 },
-            { name: "Falcon_Eye", count: 12 },
-            { name: "Robo_X", count: 8 },
-            { name: "New_Supporter", count: 5 }
-        ];
+        let realSupporters = localStorage.getItem('realSupportersList') ? JSON.parse(localStorage.getItem('realSupportersList')) : [];
 
         updateDisplay();
 
@@ -521,33 +489,50 @@
         }
 
         function supportUs() {
+            if (!username || username.trim() === "") {
+                let inputName = prompt("شكراً لدعمك! يرجى إدخال اسم المستخدم الخاص بك لتظهر في قائمة الصدارة (Leaderboard):");
+                if (inputName && inputName.trim() !== "") {
+                    username = inputName.trim();
+                    localStorage.setItem('supporterUsername', username);
+                } else {
+                    username = "داعم مجهول";
+                    localStorage.setItem('supporterUsername', username);
+                }
+            }
+
             supportAds++;
             localStorage.setItem('supportAds', supportAds);
+
+            let existingUser = realSupporters.find(user => user.name === username);
+            if (existingUser) {
+                existingUser.count = supportAds;
+            } else {
+                realSupporters.push({ name: username, count: supportAds });
+            }
+
+            localStorage.setItem('realSupportersList', JSON.stringify(realSupporters));
             updateDisplay();
         }
 
         function renderLeaderboard() {
-            let list = [...baseLeaderboard];
-            
-            // إضافة المستخدم الحالي للقائمة بناءً على عدد إعلانات دعمه
-            list.push({ name: "أنت (حسابك الشخصي) ⭐", count: supportAds, isUser: true });
-
-            // ترتيب الصدارة من الأكثر للأقل
-            list.sort((a, b) => b.count - a.count);
-
-            // أخذ أول 30 داعم فقط
-            list = list.slice(0, 30);
-
             let tbody = document.getElementById('leaderboardBody');
             tbody.innerHTML = "";
 
-            list.forEach((item, index) => {
+            let activeSupporters = realSupporters.filter(item => item.count > 0);
+
+            if (activeSupporters.length === 0) {
+                let tr = document.createElement('tr');
+                tr.innerHTML = `<td colspan="3" class="no-data">no one</td>`;
+                tbody.appendChild(tr);
+                return;
+            }
+
+            activeSupporters.sort((a, b) => b.count - a.count);
+            let top30 = activeSupporters.slice(0, 30);
+
+            top30.forEach((item, index) => {
                 let rank = index + 1;
                 let tr = document.createElement('tr');
-                
-                if (item.isUser) {
-                    tr.classList.add('current-user-row');
-                }
 
                 let rankBadge = "#" + rank;
                 if (rank === 1) rankBadge = "🥇 #1";

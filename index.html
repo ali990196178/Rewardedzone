@@ -15,6 +15,8 @@
             --primary-color: #3b82f6;
             --accent-color: #10b981;
             --gold-color: #f59e0b;
+            --silver-color: #94a3b8;
+            --bronze-color: #b45309;
             --support-color: #ec4899;
             --text-color: #f8fafc;
             --text-muted: #94a3b8;
@@ -138,7 +140,6 @@
             margin-top: 5px;
         }
 
-        /* تصميم شريط التقدم البصري */
         .progress-box {
             background: #0f172a;
             padding: 1.2rem;
@@ -233,6 +234,50 @@
             font-weight: bold;
         }
 
+        /* تصميم قسم ليدربورد الأبطال الداعمين */
+        .leaderboard-section {
+            background: var(--card-bg);
+            border-radius: 12px;
+            padding: 2rem 1.5rem;
+            margin-bottom: 1.5rem;
+            border: 1px solid #334155;
+            text-align: center;
+        }
+
+        .leaderboard-section h3 {
+            color: var(--gold-color);
+            font-size: 1.5rem;
+            margin-bottom: 0.5rem;
+        }
+
+        .leaderboard-section p {
+            color: var(--text-muted);
+            font-size: 0.9rem;
+            margin-bottom: 1.2rem;
+        }
+
+        .leaderboard-table {
+            width: 100%;
+            border-collapse: collapse;
+            font-size: 0.95rem;
+        }
+
+        .leaderboard-table th, .leaderboard-table td {
+            padding: 10px;
+            border-bottom: 1px solid #334155;
+            text-align: center;
+        }
+
+        .leaderboard-table th {
+            background-color: #0f172a;
+            color: var(--primary-color);
+        }
+
+        .rank-1 { color: var(--gold-color); font-weight: bold; }
+        .rank-2 { color: var(--silver-color); font-weight: bold; }
+        .rank-3 { color: var(--bronze-color); font-weight: bold; }
+        .current-user-row { background-color: rgba(59, 130, 246, 0.15); font-weight: bold; border: 1px solid var(--primary-color); }
+
         .info-section {
             background: var(--card-bg);
             border-radius: 12px;
@@ -287,7 +332,7 @@
 
     <div class="stats-bar">
         <div>إجمالي المهام المنجزة: <span id="adsCount">0</span> إعلان</div>
-        <div>رصيد روبوكس: <span id="pointsCount">0</span> روبوكس</div>
+        <div>رصيد بوبوكس: <span id="pointsCount">0.00</span> بوبوكس</div>
     </div>
 
     <main>
@@ -297,41 +342,60 @@
             <p>اضغط على الهدف الذي تريد الوصول إليه لتثبيته، ثم أكمل مشاهدة الإعلانات لملء الشريط واستلام الجائزة!</p>
 
             <div class="rewards-grid">
-                <div class="reward-item" id="target-5" onclick="selectTarget(5)">المستوى الأول <strong>5 روبوكس</strong></div>
-                <div class="reward-item" id="target-50" onclick="selectTarget(50)">المستوى الثاني <strong>50 روبوكس</strong></div>
-                <div class="reward-item" id="target-100" onclick="selectTarget(100)">المستوى الثالث <strong>100 روبوكس</strong></div>
-                <div class="reward-item" id="target-250" onclick="selectTarget(250)">الجائزة الكبرى <strong>250 روبوكس</strong></div>
+                <div class="reward-item" id="target-5" onclick="selectTarget(5, 60)">المستوى الأول <strong>5 بوبوكس</strong></div>
+                <div class="reward-item" id="target-50" onclick="selectTarget(50, 600)">المستوى الثاني <strong>50 بوبوكس</strong></div>
+                <div class="reward-item" id="target-100" onclick="selectTarget(100, 1200)">المستوى الثالث <strong>100 بوبوكس</strong></div>
+                <div class="reward-item" id="target-250" onclick="selectTarget(250, 3000)">الجائزة الكبرى <strong>250 بوبوكس</strong></div>
             </div>
 
             <!-- شريط التقدم المطور -->
             <div class="progress-box">
                 <div class="progress-title">
-                    <span>الهدف المحدد: <strong id="targetDisplay">5 روبوكس</strong></span>
+                    <span>الهدف المحدد: <strong id="targetDisplay">5 بوبوكس</strong></span>
                     <span id="percentText">0%</span>
                 </div>
                 <div class="progress-bar-bg">
                     <div id="progressBarFill" class="progress-bar-fill"></div>
                 </div>
                 <div style="margin-top: 8px; font-size: 0.9rem; color: var(--text-muted);" id="progressSubText">
-                    الرصيد الحالي: 0 من أصل 5 روبوكس
+                    الإعلانات المنجزة للهدف: 0 من أصل 60 إعلان
                 </div>
             </div>
 
-            <button id="actionBtn" class="btn" onclick="handleAction()">إنجاز مشاهدة إعلان واستلام روبوكس 📺</button>
+            <button id="actionBtn" class="btn" onclick="handleAction()">إنجاز مشاهدة إعلان واستلام بوبوكس 📺</button>
         </div>
 
         <!-- قسم دعم المنصة التطوعي -->
         <div class="support-section">
             <h3>هل تحب موقعنا؟ ادعمنا بدون مقابل! 💖</h3>
-            <p>إذا كنت تحب المنصة وتريد مساعدتنا في الاستمرار وتوفير المزيد من جوائز الروبوكس، يمكنك مشاهدة إعلانات دعم مجانية وبدون مقابل!</p>
+            <p>إذا كنت تحب المنصة وتريد مساعدتنا في الاستمرار وتوفير المزيد من جوائز البوبوكس، يمكنك مشاهدة إعلانات دعم مجانية وبدون مقابل!</p>
             <button class="btn btn-support" onclick="supportUs()">دعم الموقع بمشاهدة إعلان 💖</button>
             <div class="support-stats">إجمالي مساهماتك في دعم المنصة: <span id="supportCount">0</span> إعلان</div>
+        </div>
+
+        <!-- قسم قائمة أفضل 30 داعم (Leaderboard) -->
+        <div class="leaderboard-section">
+            <h3>🏆 قائمة أفضل 30 داعماً للمنصة (Leaderboard)</h3>
+            <p>شرف الداعمين الأبطال الذين يساهمون بمشاهدة إعلانات الدعم لإبقاء الموقع مجانياً للجميع!</p>
+            
+            <table class="leaderboard-table">
+                <thead>
+                    <tr>
+                        <th>المركز</th>
+                        <th>اسم الداعم</th>
+                        <th>إعلانات الدعم</th>
+                    </tr>
+                </thead>
+                <tbody id="leaderboardBody">
+                    <!-- يتم توليد القائمة هنا تلقائياً عبر JS -->
+                </tbody>
+            </table>
         </div>
 
         <div class="info-section">
             <h3>كيف تزيد من أرباحك؟</h3>
             <p>• كلما زاد عدد الإعلانات والمهام التي يشاهدها المستخدمون، زادت أرباحك الإعلانية بشكل مباشر.</p>
-            <p>• النظام مصمم لتحفيز المستخدم على إتمام مهام أكثر للوصول إلى جوائز الـ 250 روبوكس الكبرى.</p>
+            <p>• النظام مصمم لتحفيز المستخدم على إتمام مهام أكثر للوصول إلى جوائز الـ 250 بوبوكس الكبرى.</p>
         </div>
     </main>
 
@@ -346,24 +410,59 @@
 
     <script>
         let adsWatched = localStorage.getItem('adsWatched') ? parseInt(localStorage.getItem('adsWatched')) : 0;
-        let pointsEarned = localStorage.getItem('pointsEarned') ? parseInt(localStorage.getItem('pointsEarned')) : 0;
+        let pointsEarned = localStorage.getItem('pointsEarned') ? parseFloat(localStorage.getItem('pointsEarned')) : 0;
         let supportAds = localStorage.getItem('supportAds') ? parseInt(localStorage.getItem('supportAds')) : 0;
         let targetRobux = localStorage.getItem('targetRobux') ? parseInt(localStorage.getItem('targetRobux')) : 5;
+        let requiredAds = localStorage.getItem('requiredAds') ? parseInt(localStorage.getItem('requiredAds')) : 60;
+
+        // قائمة داعمين افتراضية واقعية
+        const baseLeaderboard = [
+            { name: "ProGamer_99 👑", count: 480 },
+            { name: "Legend_Roblox 🥇", count: 412 },
+            { name: "Shadow_Hunter 🥈", count: 350 },
+            { name: "King_Of_Games", count: 290 },
+            { name: "Hero_X", count: 265 },
+            { name: "Master_Builder", count: 240 },
+            { name: "Dark_Knight", count: 210 },
+            { name: "GamerGirl_Sa", count: 195 },
+            { name: "Speed_Runner", count: 180 },
+            { name: "Pixel_Master", count: 165 },
+            { name: "Vortex_Player", count: 150 },
+            { name: "Alpha_Wolf", count: 135 },
+            { name: "Super_Sam", count: 120 },
+            { name: "Blox_Pro", count: 110 },
+            { name: "Neon_Rider", count: 98 },
+            { name: "Dragon_Slayer", count: 85 },
+            { name: "Storm_Breaker", count: 76 },
+            { name: "Star_Gamer", count: 68 },
+            { name: "Cyber_Ninja", count: 59 },
+            { name: "Epic_Winner", count: 52 },
+            { name: "Fire_Bolt", count: 45 },
+            { name: "Ice_Wizard", count: 38 },
+            { name: "Thunder_Boy", count: 31 },
+            { name: "Sky_Walker", count: 25 },
+            { name: "Ghost_Rider", count: 20 },
+            { name: "Mystery_Player", count: 16 },
+            { name: "Falcon_Eye", count: 12 },
+            { name: "Robo_X", count: 8 },
+            { name: "New_Supporter", count: 5 }
+        ];
 
         updateDisplay();
 
-        function selectTarget(targetValue) {
+        function selectTarget(targetValue, reqAds) {
             targetRobux = targetValue;
+            requiredAds = reqAds;
             localStorage.setItem('targetRobux', targetRobux);
+            localStorage.setItem('requiredAds', requiredAds);
             updateDisplay();
         }
 
         function updateDisplay() {
             document.getElementById('adsCount').innerText = adsWatched;
-            document.getElementById('pointsCount').innerText = pointsEarned;
+            document.getElementById('pointsCount').innerText = pointsEarned.toFixed(2);
             document.getElementById('supportCount').innerText = supportAds;
 
-            // تحديث تحديد الهدف البصري (إضافة الكلاس active)
             const targets = [5, 50, 100, 250];
             targets.forEach(val => {
                 const el = document.getElementById('target-' + val);
@@ -376,31 +475,33 @@
                 }
             });
 
-            document.getElementById('targetDisplay').innerText = targetRobux + " روبوكس";
+            document.getElementById('targetDisplay').innerText = targetRobux + " بوبوكس";
 
-            // حساب نسبة مئوية لشريط التقدم الأخضر
+            let currentTargetAds = Math.min(Math.floor((pointsEarned / targetRobux) * requiredAds), requiredAds);
             let percentage = Math.min(Math.floor((pointsEarned / targetRobux) * 100), 100);
+
             document.getElementById('progressBarFill').style.width = percentage + "%";
             document.getElementById('percentText').innerText = percentage + "%";
-            document.getElementById('progressSubText').innerText = "الرصيد الحالي: " + pointsEarned + " من أصل " + targetRobux + " روبوكس";
+            document.getElementById('progressSubText').innerText = "التقدم الحالي: " + currentTargetAds + " من أصل " + requiredAds + " إعلان للهدف";
 
-            // تحديث حالة الزر الرئيسي
             const actionBtn = document.getElementById('actionBtn');
             if (pointsEarned >= targetRobux) {
-                actionBtn.innerText = "سحب الجائزة (" + targetRobux + " روبوكس) 🎁";
+                actionBtn.innerText = "سحب الجائزة (" + targetRobux + " بوبوكس) 🎁";
                 actionBtn.classList.add('btn-claim');
             } else {
-                actionBtn.innerText = "إنجاز مشاهدة إعلان واستلام روبوكس 📺";
+                actionBtn.innerText = "إنجاز مشاهدة إعلان واستلام بوبوكس 📺";
                 actionBtn.classList.remove('btn-claim');
             }
+
+            renderLeaderboard();
         }
 
         function handleAction() {
             if (pointsEarned >= targetRobux) {
-                let gamePassURL = prompt("مبروك! لقد وصلت للهدف المخصص (" + targetRobux + " روبوكس).\nيرجى وضع رابط (URL) القيم باس (Gamepass) الخاص بك في روبلوكس لاستلام الجائزة:");
+                let gamePassURL = prompt("مبروك! لقد وصلت للهدف المخصص (" + targetRobux + " بوبوكس).\nيرجى وضع رابط (URL) القيم باس (Gamepass) الخاص بك لاستلام الجائزة:");
                 
                 if (gamePassURL && gamePassURL.trim() !== "") {
-                    alert("تم إرسال طلب السحب بنجاح! سيتم التحقق من القيم باس وتحويل الروبوكس لحسابك قريباً.");
+                    alert("تم إرسال طلب السحب بنجاح! سيتم التحقق من القيم باس وتحويل البوبوكس لحسابك قريباً.");
                     pointsEarned = 0;
                     localStorage.setItem('pointsEarned', pointsEarned);
                     updateDisplay();
@@ -409,7 +510,8 @@
                 }
             } else {
                 adsWatched++;
-                pointsEarned += 2; // إعطاء نقطتين لكل إعلان
+                let pointsPerAd = targetRobux / requiredAds;
+                pointsEarned += pointsPerAd;
 
                 localStorage.setItem('adsWatched', adsWatched);
                 localStorage.setItem('pointsEarned', pointsEarned);
@@ -422,7 +524,48 @@
             supportAds++;
             localStorage.setItem('supportAds', supportAds);
             updateDisplay();
-            alert("شكراً جزيلاً لك على دعمك للموقع! مساهمتك تساعدنا على استمرار تقديم روبوكس مجاني للجميع 💖");
+        }
+
+        function renderLeaderboard() {
+            let list = [...baseLeaderboard];
+            
+            // إضافة المستخدم الحالي للقائمة بناءً على عدد إعلانات دعمه
+            list.push({ name: "أنت (حسابك الشخصي) ⭐", count: supportAds, isUser: true });
+
+            // ترتيب الصدارة من الأكثر للأقل
+            list.sort((a, b) => b.count - a.count);
+
+            // أخذ أول 30 داعم فقط
+            list = list.slice(0, 30);
+
+            let tbody = document.getElementById('leaderboardBody');
+            tbody.innerHTML = "";
+
+            list.forEach((item, index) => {
+                let rank = index + 1;
+                let tr = document.createElement('tr');
+                
+                if (item.isUser) {
+                    tr.classList.add('current-user-row');
+                }
+
+                let rankBadge = "#" + rank;
+                if (rank === 1) rankBadge = "🥇 #1";
+                else if (rank === 2) rankBadge = "🥈 #2";
+                else if (rank === 3) rankBadge = "🥉 #3";
+
+                let rankClass = "";
+                if (rank === 1) rankClass = "rank-1";
+                else if (rank === 2) rankClass = "rank-2";
+                else if (rank === 3) rankClass = "rank-3";
+
+                tr.innerHTML = `
+                    <td class="${rankClass}">${rankBadge}</td>
+                    <td>${item.name}</td>
+                    <td>${item.count} إعلان</td>
+                `;
+                tbody.appendChild(tr);
+            });
         }
     </script>
 

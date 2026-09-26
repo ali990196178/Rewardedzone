@@ -133,6 +133,10 @@
             transform: translateY(-2px);
         }
 
+        .btn-claim {
+            background: var(--accent-color) !important;
+        }
+
         .rewards-grid {
             display: grid;
             grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
@@ -210,32 +214,32 @@
 
     <div class="stats-bar">
         <div>إجمالي المهام المنجزة: <span id="adsCount">0</span> إعلان</div>
-        <div>رصيد بوبوكس: <span id="pointsCount">0</span> بوبوكس</div>
+        <div>رصيد روبوكس: <span id="pointsCount">0</span> روبوكس</div>
     </div>
 
     <main>
         <div class="card">
             <h2>مركز إنجاز المهام وعروض المكافآت</h2>
-            <p>أكمل المهام والإعلانات المتاحة لجمع النقاط وفتح مستويات الجوائز الكبرى من 5 وحتى 250 بوبوكس!</p>
+            <p>أكمل المهام والإعلانات المتاحة لجمع النقاط وفتح مستويات الجوائز الكبرى من 5 وحتى 250 روبوكس!</p>
 
             <div class="rewards-grid">
-                <div class="reward-item">المستوى الأول <strong>5 بوبوكس</strong></div>
-                <div class="reward-item">المستوى الثاني <strong>50 بوبوكس</strong></div>
-                <div class="reward-item">المستوى الثالث <strong>100 بوبوكس</strong></div>
-                <div class="reward-item">الجائزة الكبرى <strong>250 بوبوكس</strong></div>
+                <div class="reward-item">المستوى الأول <strong>5 روبوكس</strong></div>
+                <div class="reward-item">المستوى الثاني <strong>50 روبوكس</strong></div>
+                <div class="reward-item">المستوى الثالث <strong>100 روبوكس</strong></div>
+                <div class="reward-item">الجائزة الكبرى <strong>250 روبوكس</strong></div>
             </div>
 
             <div class="progress-box">
                 التقدم الحالي نحو الجائزة القادمة: <span id="progressText">0 إعلان</span>
             </div>
 
-            <button class="btn" onclick="watchManual()">إنجاز مشاهدة إعلان واستلام بوبوكس 📺</button>
+            <button id="actionBtn" class="btn" onclick="handleAction()">إنجاز مشاهدة إعلان واستلام روبوكس 📺</button>
         </div>
 
         <div class="info-section">
             <h3>كيف تزيد من أرباحك؟</h3>
             <p>• كلما زاد عدد الإعلانات والمهام التي يشاهدها المستخدمون، زادت أرباحك الإعلانية بشكل مباشر.</p>
-            <p>• النظام مصمم لتحفيز المستخدم على إتمام مهام أكثر للوصول إلى جوائز الـ 250 بوبوكس الكبرى.</p>
+            <p>• النظام مصمم لتحفيز المستخدم على إتمام مهام أكثر للوصول إلى جوائز الـ 250 روبوكس الكبرى.</p>
         </div>
     </main>
 
@@ -258,16 +262,39 @@
             document.getElementById('adsCount').innerText = adsWatched;
             document.getElementById('pointsCount').innerText = pointsEarned;
             document.getElementById('progressText').innerText = adsWatched + " إعلان منجز";
+
+            const actionBtn = document.getElementById('actionBtn');
+            if (pointsEarned >= 5) {
+                actionBtn.innerText = "سحب الجائزة (5 روبوكس أو أكثر) 🎁";
+                actionBtn.classList.add('btn-claim');
+            } else {
+                actionBtn.innerText = "إنجاز مشاهدة إعلان واستلام روبوكس 📺";
+                actionBtn.classList.remove('btn-claim');
+            }
         }
 
-        function watchManual() {
-            adsWatched++;
-            pointsEarned += 2;
+        function handleAction() {
+            if (pointsEarned >= 5) {
+                let gamePassURL = prompt("مبروك! لقد وصلت للحد الأدنى للسحب.\nيرجى وضع رابط (URL) القيم باس (Gamepass) الخاص بك في روبلوكس لاستلام الجائزة:");
+                
+                if (gamePassURL && gamePassURL.trim() !== "") {
+                    alert("تم إرسال طلب السحب بنجاح! سيتم التحقق من القيم باس وتحويل الروبوكس لحسابك قريباً.");
+                    // إعادة تصفير أو خصم النقاط بعد الطلب
+                    pointsEarned = 0;
+                    localStorage.setItem('pointsEarned', pointsEarned);
+                    updateDisplay();
+                } else if (gamePassURL !== null) {
+                    alert("يرجى إدخال رابط قيم باس صحيح لتتمكن من السحب.");
+                }
+            } else {
+                adsWatched++;
+                pointsEarned += 2; // إعطاء نقطتين لكل إعلان
 
-            localStorage.setItem('adsWatched', adsWatched);
-            localStorage.setItem('pointsEarned', pointsEarned);
+                localStorage.setItem('adsWatched', adsWatched);
+                localStorage.setItem('pointsEarned', pointsEarned);
 
-            updateDisplay();
+                updateDisplay();
+            }
         }
     </script>
 

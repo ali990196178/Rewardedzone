@@ -15,6 +15,7 @@
             --primary-color: #3b82f6;
             --accent-color: #10b981;
             --gold-color: #f59e0b;
+            --support-color: #ec4899;
             --text-color: #f8fafc;
             --text-muted: #94a3b8;
         }
@@ -100,18 +101,80 @@
             line-height: 1.6;
         }
 
+        .rewards-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
+            gap: 10px;
+            margin-bottom: 1.5rem;
+        }
+
+        .reward-item {
+            background: #0f172a;
+            border: 2px solid #334155;
+            padding: 12px 10px;
+            border-radius: 8px;
+            text-align: center;
+            font-size: 0.9rem;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            user-select: none;
+        }
+
+        .reward-item:hover {
+            border-color: var(--primary-color);
+            transform: translateY(-2px);
+        }
+
+        .reward-item.active {
+            border-color: var(--gold-color);
+            background: #1e1b4b;
+            box-shadow: 0 0 12px rgba(245, 158, 11, 0.3);
+        }
+
+        .reward-item strong {
+            color: var(--gold-color);
+            display: block;
+            font-size: 1.1rem;
+            margin-top: 5px;
+        }
+
+        /* تصميم شريط التقدم البصري */
         .progress-box {
             background: #0f172a;
             padding: 1.2rem;
             border-radius: 8px;
             margin-bottom: 1.8rem;
-            font-size: 1.1rem;
+            font-size: 1.05rem;
             border: 1px solid #334155;
+            text-align: right;
         }
 
-        .progress-box span {
-            color: var(--gold-color);
+        .progress-title {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 8px;
             font-weight: bold;
+        }
+
+        .progress-title span {
+            color: var(--gold-color);
+        }
+
+        .progress-bar-bg {
+            background-color: #111827;
+            height: 18px;
+            border-radius: 10px;
+            overflow: hidden;
+            border: 1px solid #374151;
+            position: relative;
+        }
+
+        .progress-bar-fill {
+            background: linear-gradient(90deg, #059669, #10b981);
+            height: 100%;
+            width: 0%;
+            border-radius: 10px;
+            transition: width 0.4s ease;
         }
 
         .btn {
@@ -137,27 +200,37 @@
             background: var(--accent-color) !important;
         }
 
-        .rewards-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
-            gap: 10px;
+        .btn-support {
+            background: var(--support-color) !important;
+        }
+
+        .support-section {
+            background: var(--card-bg);
+            border-radius: 12px;
+            padding: 2rem;
             margin-bottom: 1.5rem;
-        }
-
-        .reward-item {
-            background: #0f172a;
-            border: 1px solid #334155;
-            padding: 10px;
-            border-radius: 8px;
+            border: 1px solid #ec4899;
             text-align: center;
-            font-size: 0.9rem;
         }
 
-        .reward-item strong {
-            color: var(--gold-color);
-            display: block;
-            font-size: 1.1rem;
-            margin-top: 5px;
+        .support-section h3 {
+            color: var(--support-color);
+            margin-bottom: 0.8rem;
+            font-size: 1.4rem;
+        }
+
+        .support-section p {
+            color: var(--text-muted);
+            font-size: 0.95rem;
+            line-height: 1.6;
+            margin-bottom: 1.2rem;
+        }
+
+        .support-stats {
+            margin-top: 10px;
+            font-size: 0.9rem;
+            color: var(--support-color);
+            font-weight: bold;
         }
 
         .info-section {
@@ -218,22 +291,41 @@
     </div>
 
     <main>
+        <!-- قسم الجوائز الرئيسي -->
         <div class="card">
             <h2>مركز إنجاز المهام وعروض المكافآت</h2>
-            <p>أكمل المهام والإعلانات المتاحة لجمع النقاط وفتح مستويات الجوائز الكبرى من 5 وحتى 250 روبوكس!</p>
+            <p>اضغط على الهدف الذي تريد الوصول إليه لتثبيته، ثم أكمل مشاهدة الإعلانات لملء الشريط واستلام الجائزة!</p>
 
             <div class="rewards-grid">
-                <div class="reward-item">المستوى الأول <strong>5 روبوكس</strong></div>
-                <div class="reward-item">المستوى الثاني <strong>50 روبوكس</strong></div>
-                <div class="reward-item">المستوى الثالث <strong>100 روبوكس</strong></div>
-                <div class="reward-item">الجائزة الكبرى <strong>250 روبوكس</strong></div>
+                <div class="reward-item" id="target-5" onclick="selectTarget(5)">المستوى الأول <strong>5 روبوكس</strong></div>
+                <div class="reward-item" id="target-50" onclick="selectTarget(50)">المستوى الثاني <strong>50 روبوكس</strong></div>
+                <div class="reward-item" id="target-100" onclick="selectTarget(100)">المستوى الثالث <strong>100 روبوكس</strong></div>
+                <div class="reward-item" id="target-250" onclick="selectTarget(250)">الجائزة الكبرى <strong>250 روبوكس</strong></div>
             </div>
 
+            <!-- شريط التقدم المطور -->
             <div class="progress-box">
-                التقدم الحالي نحو الجائزة القادمة: <span id="progressText">0 إعلان</span>
+                <div class="progress-title">
+                    <span>الهدف المحدد: <strong id="targetDisplay">5 روبوكس</strong></span>
+                    <span id="percentText">0%</span>
+                </div>
+                <div class="progress-bar-bg">
+                    <div id="progressBarFill" class="progress-bar-fill"></div>
+                </div>
+                <div style="margin-top: 8px; font-size: 0.9rem; color: var(--text-muted);" id="progressSubText">
+                    الرصيد الحالي: 0 من أصل 5 روبوكس
+                </div>
             </div>
 
             <button id="actionBtn" class="btn" onclick="handleAction()">إنجاز مشاهدة إعلان واستلام روبوكس 📺</button>
+        </div>
+
+        <!-- قسم دعم المنصة التطوعي -->
+        <div class="support-section">
+            <h3>هل تحب موقعنا؟ ادعمنا بدون مقابل! 💖</h3>
+            <p>إذا كنت تحب المنصة وتريد مساعدتنا في الاستمرار وتوفير المزيد من جوائز الروبوكس، يمكنك مشاهدة إعلانات دعم مجانية وبدون مقابل!</p>
+            <button class="btn btn-support" onclick="supportUs()">دعم الموقع بمشاهدة إعلان 💖</button>
+            <div class="support-stats">إجمالي مساهماتك في دعم المنصة: <span id="supportCount">0</span> إعلان</div>
         </div>
 
         <div class="info-section">
@@ -255,17 +347,47 @@
     <script>
         let adsWatched = localStorage.getItem('adsWatched') ? parseInt(localStorage.getItem('adsWatched')) : 0;
         let pointsEarned = localStorage.getItem('pointsEarned') ? parseInt(localStorage.getItem('pointsEarned')) : 0;
+        let supportAds = localStorage.getItem('supportAds') ? parseInt(localStorage.getItem('supportAds')) : 0;
+        let targetRobux = localStorage.getItem('targetRobux') ? parseInt(localStorage.getItem('targetRobux')) : 5;
 
         updateDisplay();
+
+        function selectTarget(targetValue) {
+            targetRobux = targetValue;
+            localStorage.setItem('targetRobux', targetRobux);
+            updateDisplay();
+        }
 
         function updateDisplay() {
             document.getElementById('adsCount').innerText = adsWatched;
             document.getElementById('pointsCount').innerText = pointsEarned;
-            document.getElementById('progressText').innerText = adsWatched + " إعلان منجز";
+            document.getElementById('supportCount').innerText = supportAds;
 
+            // تحديث تحديد الهدف البصري (إضافة الكلاس active)
+            const targets = [5, 50, 100, 250];
+            targets.forEach(val => {
+                const el = document.getElementById('target-' + val);
+                if (el) {
+                    if (val === targetRobux) {
+                        el.classList.add('active');
+                    } else {
+                        el.classList.remove('active');
+                    }
+                }
+            });
+
+            document.getElementById('targetDisplay').innerText = targetRobux + " روبوكس";
+
+            // حساب نسبة مئوية لشريط التقدم الأخضر
+            let percentage = Math.min(Math.floor((pointsEarned / targetRobux) * 100), 100);
+            document.getElementById('progressBarFill').style.width = percentage + "%";
+            document.getElementById('percentText').innerText = percentage + "%";
+            document.getElementById('progressSubText').innerText = "الرصيد الحالي: " + pointsEarned + " من أصل " + targetRobux + " روبوكس";
+
+            // تحديث حالة الزر الرئيسي
             const actionBtn = document.getElementById('actionBtn');
-            if (pointsEarned >= 5) {
-                actionBtn.innerText = "سحب الجائزة (5 روبوكس أو أكثر) 🎁";
+            if (pointsEarned >= targetRobux) {
+                actionBtn.innerText = "سحب الجائزة (" + targetRobux + " روبوكس) 🎁";
                 actionBtn.classList.add('btn-claim');
             } else {
                 actionBtn.innerText = "إنجاز مشاهدة إعلان واستلام روبوكس 📺";
@@ -274,12 +396,11 @@
         }
 
         function handleAction() {
-            if (pointsEarned >= 5) {
-                let gamePassURL = prompt("مبروك! لقد وصلت للحد الأدنى للسحب.\nيرجى وضع رابط (URL) القيم باس (Gamepass) الخاص بك في روبلوكس لاستلام الجائزة:");
+            if (pointsEarned >= targetRobux) {
+                let gamePassURL = prompt("مبروك! لقد وصلت للهدف المخصص (" + targetRobux + " روبوكس).\nيرجى وضع رابط (URL) القيم باس (Gamepass) الخاص بك في روبلوكس لاستلام الجائزة:");
                 
                 if (gamePassURL && gamePassURL.trim() !== "") {
                     alert("تم إرسال طلب السحب بنجاح! سيتم التحقق من القيم باس وتحويل الروبوكس لحسابك قريباً.");
-                    // إعادة تصفير أو خصم النقاط بعد الطلب
                     pointsEarned = 0;
                     localStorage.setItem('pointsEarned', pointsEarned);
                     updateDisplay();
@@ -295,6 +416,13 @@
 
                 updateDisplay();
             }
+        }
+
+        function supportUs() {
+            supportAds++;
+            localStorage.setItem('supportAds', supportAds);
+            updateDisplay();
+            alert("شكراً جزيلاً لك على دعمك للموقع! مساهمتك تساعدنا على استمرار تقديم روبوكس مجاني للجميع 💖");
         }
     </script>
 
